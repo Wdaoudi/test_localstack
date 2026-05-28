@@ -1,4 +1,6 @@
-resource "aws_s3_bucket" "risk_data" { bucket = "risk-poc-bucket-tf" }
+resource "aws_s3_bucket" "risk_data" { 
+  bucket = "risk-poc-bucket-tf" 
+  }
 
 resource "aws_dynamodb_table" "risk_indicators" {
   name         = "RiskIndicatorsTF"

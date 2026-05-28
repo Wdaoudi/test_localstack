@@ -1,3 +1,7 @@
+**aaa**
+*aaa*
+`aaa`
+
 # docker compose : 
     - montage: "/var/run/docker.sock:/var/run/docker.sock"
         give localstack access to intern docker, when using services like lambda, localstack need to run another container.
@@ -7,7 +11,7 @@
 
 # localstack.env:
     - fake credentials that give access to aws cli, which doesn t send request to Amazon services but instead to localhost:4566
-    - command : 'source localstack.env' need to be used to charge credential to running terminal
+    - command : `source localstack.env` need to be used to charge credential to running terminal
 
 # commande : aws s3 mb s3://risk-poc-bucket
     - mb = "make bucket"
@@ -20,3 +24,16 @@
                         - terraform apply (execution command)
     - providers.tf : same effect as localstack.env link the terraform to localstack
     - main.tf : same as one for real aws infra only providers change by mocking situation
+
+*main.tf*: 
+    - *resource "aws_s3_bucket" "risk_data" { bucket = "risk-poc-bucket-tf" }*
+        creation of the bucket by  calling his real name `risk-poc-bucket-tf` aws side. `aws_s3_bucket` == object type. `risk-data` terraform intern name.
+    -*dynamo_table*
+        primary key is an id, which is declared by attribute as a `string` object called `id`.
+    -*SQS file*
+        message queue
+    -*Lambda*
+        4 parts that work together : 
+            - `IAM`: idendity IAM required to make lambda work ==> lambda service is allowed to run
+            - `zip_code`: lambda is deployed under archive form, `data` and not ressource bcs it doesnt create anything in this case only zip file.py by giving his name & path
+            
