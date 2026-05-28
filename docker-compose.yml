@@ -13,7 +13,7 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "./.localstack-data:/var/lib/localstack"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"\]
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
       interval: 10s
       timeout: 5s
       retries: 5
