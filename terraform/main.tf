@@ -6,7 +6,10 @@ resource "aws_dynamodb_table" "risk_indicators" {
   name         = "RiskIndicatorsTF"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "id"
-  attribute { name = "id"  type = "S" }
+  attribute { 
+    name = "id"  
+    type = "S" 
+  }
 }
 
 resource "aws_sqs_queue" "risk_events" { name = "risk-events-tf" }
