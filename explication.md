@@ -12,3 +12,11 @@
 # commande : aws s3 mb s3://risk-poc-bucket
     - mb = "make bucket"
     - aws [options] help = show all command that exists
+
+# terraform :
+    - change the manual setup to IaC 
+    - life of terraform : - terraform init (download the provider aws which talks to aws api)
+                        - terraform plan (show what ll be created / previsualisation)
+                        - terraform apply (execution command)
+    - providers.tf : same effect as localstack.env link the terraform to localstack
+    - main.tf : same as one for real aws infra only providers change by mocking situation
