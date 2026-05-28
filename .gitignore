@@ -1,2 +1,6 @@
 .localstack-data/
 __pycache__/
+.terraform/
+.terraform.lock.hcl
+*.zip
+*.log

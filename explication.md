@@ -36,4 +36,20 @@
         4 parts that work together : 
             - `IAM`: idendity IAM required to make lambda work ==> lambda service is allowed to run
             - `zip_code`: lambda is deployed under archive form, `data` and not ressource bcs it doesnt create anything in this case only zip file.py by giving his name & path
-            
+    -*function*
+        la Lambda elle-même. Le cœur = les RÉFÉRENCES vers les autres blocs :
+            - `filename` = le zip produit par le data archive_file (4b)
+            - `role`     = l'ARN du rôle IAM (4a)
+            - `TABLE_NAME` = nom de la table DynamoDB, passé en variable d'env
+            - `handler = "process_exposure.handler"` = point d'entrée :
+              fichier process_exposure.py → fonction handler()
+        Ces références = Terraform déduit l'ordre de création (graphe de dépendances).
+    -*authorization S3->lambda* (aws_lambda_permission):
+        AUTORISE le service S3 à invoquer la Lambda (action lambda:InvokeFunction).
+        Sans cette permission, S3 n'aurait PAS le droit de déclencher la fonction.
+        C'est une permission, pas un câblage : elle ouvre la porte, sans rien connecter.
+    -*linking event* (aws_s3_bucket_notification):
+        CÂBLE l'événement : "quand un objet est créé (s3:ObjectCreated:*) dans le
+        bucket → invoque la Lambda". C'est ça qui connecte réellement S3 à la fonction.
+        `depends_on = [permission]` force à créer la permission AVANT la notification
+        (sinon S3 brancherait une Lambda qu'il n'a pas encore le droit d'appeler).
